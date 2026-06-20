@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://3652ykye1tg3"]
+
+[ext_resource type="Script" uid="uid://d4n1f1ubtn67r" path="res://Script/gun.gd" id="1_nxj5y"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_ucufk"]
+size = Vector2(100, 25)
+
+[node name="Gun" type="Node2D" unique_id=462378014]
+script = ExtResource("1_nxj5y")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="." unique_id=810404534]
+mesh = SubResource("QuadMesh_ucufk")
+
+[node name="MeshInstance2D2" type="MeshInstance2D" parent="." unique_id=1125533363]
+position = Vector2(-33, 25.999998)
+rotation = -1.5707964
+scale = Vector2(0.3426087, 1.0000001)
+mesh = SubResource("QuadMesh_ucufk")
+
+[node name="RayCast2D" type="RayCast2D" parent="." unique_id=216094973]
+target_position = Vector2(2000, 0)

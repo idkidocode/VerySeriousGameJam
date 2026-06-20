@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://j54lupoylhq8"]
+
+[ext_resource type="Script" uid="uid://cagq5hhc4da6i" path="res://Script/player_movement.gd" id="1_v0iea"]
+[ext_resource type="PackedScene" uid="uid://3652ykye1tg3" path="res://Scenes/gun.tscn" id="2_cvnsp"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_ucufk"]
+size = Vector2(50, 50)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ucufk"]
+radius = 25.0
+
+[node name="Player" type="CharacterBody2D" unique_id=1754233404]
+script = ExtResource("1_v0iea")
+
+[node name="MeshInstance2D" type="MeshInstance2D" parent="." unique_id=312975493]
+mesh = SubResource("QuadMesh_ucufk")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1263350968]
+shape = SubResource("CircleShape2D_ucufk")
+
+[node name="WeaponAnchor" type="Node2D" parent="." unique_id=807953477]
+
+[node name="Gun" parent="WeaponAnchor" unique_id=462378014 instance=ExtResource("2_cvnsp")]
+position = Vector2(93, 0)
