@@ -2,6 +2,8 @@
 
 [ext_resource type="PackedScene" uid="uid://j54lupoylhq8" path="res://Scenes/player.tscn" id="1_i04dx"]
 [ext_resource type="PackedScene" uid="uid://cwgee3xgnaamb" path="res://Enemies/DefultEnemy.tscn" id="2_8pvmw"]
+[ext_resource type="Script" uid="uid://cegd5h2j4ee0l" path="res://Script/spawner.gd" id="3_spawn"]
+[ext_resource type="Script" path="res://Script/hud.gd" id="4_hud"]
 
 [node name="Main" type="Node2D" unique_id=1318911814]
 
@@ -13,3 +15,13 @@ anchor_mode = 0
 
 [node name="Enemy" parent="." unique_id=413946980 instance=ExtResource("2_8pvmw")]
 position = Vector2(647, 329)
+
+[node name="Spawner" type="Node2D" parent="." unique_id=500100100]
+position = Vector2(450, 350)
+script = ExtResource("3_spawn")
+enemy_scene = ExtResource("2_8pvmw")
+spawn_interval = 2.0
+spawn_radius = 400.0
+
+[node name="HUD" type="CanvasLayer" parent="." unique_id=500100200]
+script = ExtResource("4_hud")

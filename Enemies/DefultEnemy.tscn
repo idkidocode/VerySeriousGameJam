@@ -20,7 +20,7 @@ corner_radius_top_right = 50
 corner_radius_bottom_right = 50
 corner_radius_bottom_left = 50
 
-[node name="Enemy" type="CharacterBody2D" unique_id=413946980 groups=["Enemy"]]
+[node name="Enemy" type="CharacterBody2D" unique_id=413946980 groups=["Enemy", "hitable"]]
 scale = Vector2(2.3584387, 2.3584387)
 script = ExtResource("1_j26yb")
 

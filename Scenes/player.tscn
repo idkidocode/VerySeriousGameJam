@@ -182,7 +182,7 @@ animations = [{
 radius = 33.0
 height = 174.0
 
-[node name="Player" type="CharacterBody2D" unique_id=1754233404]
+[node name="Player" type="CharacterBody2D" unique_id=1754233404 groups=["Player"]]
 script = ExtResource("1_v0iea")
 
 [node name="FistAnchor" type="Area2D" parent="." unique_id=619037608]

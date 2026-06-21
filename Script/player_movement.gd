@@ -9,6 +9,12 @@ var Accel = 1800
 var Friction = 1300
 var isSprinting = false
 
+#// Health \\#
+@export var MaxHealth: float = 100.0
+var Health: float
+var invincible: bool = false
+@export var InvincibilityTime: float = 0.5
+
 @onready var weapon_anchor: Node2D = $WeaponAnchor
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
 
@@ -21,6 +27,7 @@ var canAttack = true
 
 func _ready() -> void:
 	SetSpeed = SPEED
+	Health = MaxHealth
 
 func _physics_process(delta: float) -> void:
 	#// Movement \\#
@@ -83,5 +90,23 @@ func Punch() -> void:
 				collider.TakeDamage(PlayerDamage)
 				
 				await get_tree().create_timer(Reload).timeout
-				
+
 	canAttack = true
+
+#// Health \\#
+func TakeDamage(amount: float) -> void:
+	if invincible:
+		return
+	Health -= amount
+	print("Player HP: ", Health)
+	if Health <= 0:
+		Die()
+		return
+	#// brief i-frames so contact damage doesn't drain health every frame \\#
+	invincible = true
+	await get_tree().create_timer(InvincibilityTime).timeout
+	invincible = false
+
+func Die() -> void:
+	#// Simple game over: restart the scene. Swap for a game-over screen later. \\#
+	get_tree().reload_current_scene()

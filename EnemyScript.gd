@@ -10,6 +10,11 @@ var display_health: float
 
 var Hit_tween: Tween
 
+#// Chase AI \\#
+@export var MoveSpeed: float = 120.0
+@export var ContactDamage: float = 10.0
+var player: Node2D
+
 func _ready() -> void:
 	#// Start up things \\#
 	MaxHealth = Health
@@ -46,6 +51,20 @@ func TakeDamage(amount: float) -> void:
 
 	
 	print(Health)
-	
+
 	if Health <= 0:
 		queue_free.call_deferred()
+
+func _physics_process(_delta: float) -> void:
+	#// Chase the player \\#
+	if player == null or not is_instance_valid(player):
+		player = get_tree().get_first_node_in_group("Player")
+		if player == null:
+			return
+	velocity = (player.global_position - global_position).normalized() * MoveSpeed
+	move_and_slide()
+	#// Deal contact damage to the player on touch (player throttles via i-frames) \\#
+	for i in get_slide_collision_count():
+		var collider = get_slide_collision(i).get_collider()
+		if collider and collider.is_in_group("Player") and collider.has_method("TakeDamage"):
+			collider.TakeDamage(ContactDamage)
