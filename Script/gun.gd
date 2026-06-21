@@ -9,4 +9,4 @@ func _process(_delta: float) -> void:
 		if(gunRaycast.is_colliding()):
 			var collider: CharacterBody2D = gunRaycast.get_collider()
 			if collider.is_in_group(hitableGroupName):
-				collider.TakeDamage(20);
+				collider.TakeDamage(GameManager.GunStats["Damage"]);

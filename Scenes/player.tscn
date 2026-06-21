@@ -185,17 +185,25 @@ height = 174.0
 [node name="Player" type="CharacterBody2D" unique_id=1754233404]
 script = ExtResource("1_v0iea")
 
+[node name="FistAnchor" type="Area2D" parent="." unique_id=619037608]
+
+[node name="RayCast2D" type="RayCast2D" parent="FistAnchor" unique_id=1166322669]
+scale = Vector2(2, 2)
+target_position = Vector2(55.43, 0)
+
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=381811647]
 scale = Vector2(5, 5)
 sprite_frames = SubResource("SpriteFrames_ucufk")
 animation = &"Running"
-frame = 4
-frame_progress = 0.019690411
+frame = 2
+frame_progress = 0.63399255
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1263350968]
 shape = SubResource("CapsuleShape2D_0a554")
 
 [node name="WeaponAnchor" type="Node2D" parent="." unique_id=807953477]
+visible = false
 
 [node name="Gun" parent="WeaponAnchor" unique_id=462378014 instance=ExtResource("2_cvnsp")]
 position = Vector2(93, 0)
+script = null

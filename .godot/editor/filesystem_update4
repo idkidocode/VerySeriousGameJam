@@ -1,0 +1,11 @@
+res://Scenes/root.tscn
+res://Scenes/gun.tscn
+res://MainScripts/GameManager.gd
+res://Script/gun.gd
+res://Scenes/player.tscn
+res://Script/player_movement.gd
+res://Script/enemy.gd
+res://EnemyScript.gd
+res://DefultEnemy.tscn
+res://Enemies/DefultEnemy.tscn
+res://Scenes/fist_anchor.tscn

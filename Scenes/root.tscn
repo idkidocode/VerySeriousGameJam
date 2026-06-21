@@ -1,29 +1,15 @@
 [gd_scene format=3 uid="uid://bjdnh22saw4n0"]
 
 [ext_resource type="PackedScene" uid="uid://j54lupoylhq8" path="res://Scenes/player.tscn" id="1_i04dx"]
-[ext_resource type="Script" uid="uid://qehwcvp44yp6" path="res://Script/enemy.gd" id="2_8pvmw"]
+[ext_resource type="PackedScene" uid="uid://cwgee3xgnaamb" path="res://Enemies/DefultEnemy.tscn" id="2_8pvmw"]
 
-[sub_resource type="SphereMesh" id="SphereMesh_ucufk"]
-radius = 25.0
-height = 50.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_ucufk"]
-radius = 25.0
-
-[node name="Root" type="Node2D" unique_id=1318911814]
+[node name="Main" type="Node2D" unique_id=1318911814]
 
 [node name="Player" parent="." unique_id=1754233404 instance=ExtResource("1_i04dx")]
-position = Vector2(559, 305)
+position = Vector2(235, 428)
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=692954960]
 anchor_mode = 0
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="." unique_id=1987400561 groups=["hitable"]]
-position = Vector2(801, 146)
-script = ExtResource("2_8pvmw")
-
-[node name="MeshInstance2D" type="MeshInstance2D" parent="CharacterBody2D" unique_id=1647975606]
-mesh = SubResource("SphereMesh_ucufk")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D" unique_id=381801653]
-shape = SubResource("CircleShape2D_ucufk")
+[node name="Enemy" parent="." unique_id=413946980 instance=ExtResource("2_8pvmw")]
+position = Vector2(647, 329)

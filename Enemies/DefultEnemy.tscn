@@ -1,0 +1,41 @@
+[gd_scene format=3 uid="uid://cwgee3xgnaamb"]
+
+[ext_resource type="Script" uid="uid://r7ds23u1nvdr" path="res://EnemyScript.gd" id="1_j26yb"]
+[ext_resource type="Texture2D" uid="uid://ds2st5cm8ffq7" path="res://Assets/ZombieTuffV2.png" id="2_5ov0b"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1tc4s"]
+size = Vector2(26, 25)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1tc4s"]
+bg_color = Color(1, 0.39, 0.39, 0.41568628)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_b5lhh"]
+bg_color = Color(0.54152, 0.84, 0.4032, 0.6509804)
+corner_radius_top_left = 50
+corner_radius_top_right = 50
+corner_radius_bottom_right = 50
+corner_radius_bottom_left = 50
+
+[node name="Enemy" type="CharacterBody2D" unique_id=413946980 groups=["Enemy"]]
+scale = Vector2(2.3584387, 2.3584387)
+script = ExtResource("1_j26yb")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2094000929]
+texture = ExtResource("2_5ov0b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1939245079]
+shape = SubResource("RectangleShape2D_1tc4s")
+
+[node name="HealthBar" type="ProgressBar" parent="." unique_id=1076214556]
+offset_left = -19.0
+offset_top = -21.0
+offset_right = 19.0
+offset_bottom = -15.0
+theme_override_styles/background = SubResource("StyleBoxFlat_1tc4s")
+theme_override_styles/fill = SubResource("StyleBoxFlat_b5lhh")
+value = 55.0
+show_percentage = false
