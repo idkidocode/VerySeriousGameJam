@@ -1,0 +1,15 @@
+78098b89c88a74ebe8c20117b8754620
+::res://::1782039633
+export_presets.cfg::TextFile::-1::1781968804::0::1::::<><><>0<>0<><>::
+icon.svg::CompressedTexture2D::970372848774603478::1781968804::1782006793::1::::<><><>0<>0<>0a3ce23d6dda8d43eecd48e7035c3c0b<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
+::res://Assets/::1782030069
+Main0101forgd.png::CompressedTexture2D::1744226361034747831::1782006893::1782006905::1::::<><><>0<>0<>66617a61a53ad1f0c50bb6ccc54c6edb<>res://.godot/imported/Main0101forgd.png-b382b13bbf47dde23450d69c08db9581.ctex::
+MainWalking01.png::CompressedTexture2D::4653148601092385132::1782030062::1782030069::1::::<><><>0<>0<>5aa2e67389bddb2862a7559628242b4b<>res://.godot/imported/MainWalking01.png-e7c5c233950752786d07f2a84d334360.ctex::
+::res://Scenes/::1782030337
+gun.tscn::PackedScene::2031154335564473156::1781968804::0::1::::<><><>0<>0<><>::uid://d4n1f1ubtn67r::::res://Script/gun.gd
+player.tscn::PackedScene::695412436194944181::1782030337::0::1::::<><><>0<>0<><>::uid://cagq5hhc4da6i::::res://Script/player_movement.gd<>uid://y36fhisrorm2::::res://Assets/Main0101forgd.png<>uid://3652ykye1tg3::::res://Scenes/gun.tscn<>uid://b7kaxblowdwa3::::res://Assets/MainWalking01.png
+root.tscn::PackedScene::3025116691819779575::1782007677::0::1::::<><><>0<>0<><>::uid://j54lupoylhq8::::res://Scenes/player.tscn<>uid://qehwcvp44yp6::::res://Script/enemy.gd
+::res://Script/::1782030337
+enemy.gd::GDScript::1131743453849076437::1781968804::0::1::::<>CharacterBody2D<><>0<>0<><>::
+gun.gd::GDScript::9223164394741037701::1781968804::0::1::::<>Node2D<><>0<>0<><>::
+player_movement.gd::GDScript::4786253058218796558::1782030337::0::1::::<>CharacterBody2D<><>0<>0<><>::
