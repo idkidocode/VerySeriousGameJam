@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
-const SPEED = 300.0
+var SPEED = 300.0
+var isSprinting = false
 
 @onready var weapon_anchor: Node2D = $WeaponAnchor
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
@@ -11,7 +12,10 @@ func _physics_process(delta: float) -> void:
 	if dir == Vector2(0, 0):
 		animated_sprite_2d.play("idle")
 	elif dir != Vector2(0, 0):
-		animated_sprite_2d.play("Walking")
+		if isSprinting:
+			animated_sprite_2d.play("Running")
+		else:
+			animated_sprite_2d.play("Walking")
 	else:
 		animated_sprite_2d.stop()
 	
@@ -23,5 +27,12 @@ func _physics_process(delta: float) -> void:
 	else:
 		weapon_anchor.scale.y = 1
 		animated_sprite_2d.scale.x = -5
+	
+	if Input.is_action_pressed("sprint"):
+		isSprinting = true
+		SPEED = 600.0
+	else:
+		isSprinting = false
+		SPEED = 300.0
 	
 	move_and_collide(dir * SPEED * delta)
