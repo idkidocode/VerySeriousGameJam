@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://bamywqm6g55su"]
+
+[ext_resource type="Script" uid="uid://dob6bxjq6wlc" path="res://Script/fist.gd" id="1_4upvt"]
+
+[node name="Fist" type="Node2D" unique_id=1669823911]
+script = ExtResource("1_4upvt")
+
+[node name="RayCast2D" type="RayCast2D" parent="." unique_id=963266271]
+target_position = Vector2(100, 0)

@@ -5,6 +5,23 @@
 [ext_resource type="PackedScene" uid="uid://3652ykye1tg3" path="res://Scenes/gun.tscn" id="2_cvnsp"]
 [ext_resource type="Texture2D" uid="uid://qei4bxvfuf2a" path="res://Assets/mainRunning01gd.png" id="2_fkybt"]
 [ext_resource type="Texture2D" uid="uid://b7kaxblowdwa3" path="res://Assets/MainWalking01.png" id="2_vgqql"]
+[ext_resource type="Texture2D" uid="uid://duixfmb05v5o7" path="res://Assets/mainPunch01forGD.png" id="2_x3wgy"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y6uwr"]
+atlas = ExtResource("2_x3wgy")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_83xs0"]
+atlas = ExtResource("2_x3wgy")
+region = Rect2(96, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ypfnu"]
+atlas = ExtResource("2_x3wgy")
+region = Rect2(128, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xuaoq"]
+atlas = ExtResource("2_x3wgy")
+region = Rect2(160, 0, 32, 32)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_olqyp"]
 atlas = ExtResource("2_fkybt")
@@ -97,6 +114,23 @@ region = Rect2(288, 0, 32, 32)
 [sub_resource type="SpriteFrames" id="SpriteFrames_ucufk"]
 animations = [{
 "frames": [{
+"duration": 0.3,
+"texture": SubResource("AtlasTexture_y6uwr")
+}, {
+"duration": 0.3,
+"texture": SubResource("AtlasTexture_83xs0")
+}, {
+"duration": 0.3,
+"texture": SubResource("AtlasTexture_ypfnu")
+}, {
+"duration": 0.3,
+"texture": SubResource("AtlasTexture_xuaoq")
+}],
+"loop": 1,
+"name": &"Punch01",
+"speed": 5.0
+}, {
+"frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_olqyp")
 }, {
@@ -179,31 +213,21 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_0a554"]
-radius = 33.0
-height = 174.0
+radius = 24.0
+height = 138.0
 
 [node name="Player" type="CharacterBody2D" unique_id=1754233404 groups=["Player"]]
 script = ExtResource("1_v0iea")
 
-[node name="FistAnchor" type="Area2D" parent="." unique_id=619037608]
-
-[node name="RayCast2D" type="RayCast2D" parent="FistAnchor" unique_id=1166322669]
-scale = Vector2(2, 2)
-target_position = Vector2(55.43, 0)
-
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=381811647]
 scale = Vector2(5, 5)
 sprite_frames = SubResource("SpriteFrames_ucufk")
-animation = &"Running"
-frame = 2
-frame_progress = 0.63399255
+animation = &"Punch01"
+frame_progress = 0.7292439
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1263350968]
 shape = SubResource("CapsuleShape2D_0a554")
 
 [node name="WeaponAnchor" type="Node2D" parent="." unique_id=807953477]
-visible = false
 
 [node name="Gun" parent="WeaponAnchor" unique_id=462378014 instance=ExtResource("2_cvnsp")]
-position = Vector2(93, 0)
-script = null

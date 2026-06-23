@@ -1,2 +1,8 @@
-res://Scenes/root.tscn
 res://Scenes/root.gdshader
+res://Scenes/player.tscn
+res://Scenes/fist.tscn
+res://Script/fist.gd
+res://Script/player_movement.gd
+res://MainScripts/GameManager.gd
+res://Script/gun.gd
+res://Scenes/root.tscn
