@@ -12,6 +12,7 @@ extends Node2D
 @export var slot_texture: Texture2D = preload("res://Assets/SlotMachine.png")
 @export var table_texture: Texture2D = preload("res://Assets/pokerTable.png")
 @export var art_scale: float = 4.0                    # pixel art is tiny — scale it up
+@export var collision_scale: float = 0.6              # collision box vs the sprite (smaller = easier to brush past)
 
 var _placed: Array[Vector2] = []
 
@@ -42,6 +43,7 @@ func _make_obstacle(local_pos: Vector2) -> void:
 
 	var body := StaticBody2D.new()
 	body.position = local_pos
+	body.z_index = -1   # draw behind the player and enemies, not on top of them
 
 	# the sprite (centered by default)
 	var sprite := Sprite2D.new()
@@ -50,10 +52,10 @@ func _make_obstacle(local_pos: Vector2) -> void:
 	sprite.scale = Vector2(art_scale, art_scale)
 	body.add_child(sprite)
 
-	# collision sized to match the scaled art (centered, like the sprite)
+	# collision smaller than the sprite so you can brush past furniture
 	var col := CollisionShape2D.new()
 	var shape := RectangleShape2D.new()
-	shape.size = Vector2(tex.get_size()) * art_scale
+	shape.size = Vector2(tex.get_size()) * art_scale * collision_scale
 	col.shape = shape
 	body.add_child(col)
 
