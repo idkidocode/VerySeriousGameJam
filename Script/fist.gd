@@ -9,7 +9,7 @@ func Attack() -> void:
 		
 		if collider.is_in_group("Enemy"):
 			if collider.has_method("TakeDamage"):
-				var PlayerDamage = GameManager.GunStats["Damage"]
+				var PlayerDamage = GameManager.GunStats["Damage"] * GameManager.damage_mult()
 				var Reload = GameManager.GunStats["Reload"]
 				
 				collider.TakeDamage(PlayerDamage)

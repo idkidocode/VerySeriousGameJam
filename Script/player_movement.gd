@@ -46,7 +46,7 @@ func _physics_process(delta: float) -> void:
 			animated_sprite_2d.stop()
 		
 	if dir != Vector2.ZERO:
-		velocity = velocity.move_toward(dir * SPEED, Accel * delta)
+		velocity = velocity.move_toward(dir * SPEED * GameManager.speed_mult(), Accel * delta)
 	else:
 		velocity = velocity.move_toward(Vector2.ZERO, Friction * delta)
 	#// roation \\#
@@ -78,7 +78,7 @@ func _physics_process(delta: float) -> void:
 			CurrentWeapon.Attack()
 		
 		canAttack = false
-		await get_tree().create_timer(GameManager.GunStats["Reload"]).timeout
+		await get_tree().create_timer(GameManager.GunStats["Reload"] * GameManager.reload_mult()).timeout
 		canAttack = true
 
 #// Health \\#sss

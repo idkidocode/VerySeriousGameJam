@@ -8,4 +8,4 @@ func Attack() -> void:
 	if gunRaycast.is_colliding():
 		var collider = gunRaycast.get_collider()   # untyped: could be an enemy OR a static obstacle
 		if collider and collider is CharacterBody2D and collider.is_in_group(hitableGroupName) and collider.has_method("TakeDamage"):
-			collider.TakeDamage(GameManager.GunStats["Damage"]);
+			collider.TakeDamage(GameManager.GunStats["Damage"] * GameManager.damage_mult());

@@ -1,13 +1,14 @@
 extends CanvasLayer
-# Standalone HUD: player health bar + stacking inventory + score/wave + game-over screen.
+# HUD: health bar, chip currency counters, score/wave, minimap, wave banner, game over.
 # Kept separate from the team's ui.tscn on purpose, to avoid merge conflicts.
 
 var player: Node2D
 var health_bar: ProgressBar
 var display_health: float = 0.0
 
-var inventory_box: HBoxContainer
-var inventory: Dictionary = {}   # item_id -> { "count": int, "label": Label }
+var red_label: Label
+var yellow_label: Label
+var blue_label: Label
 
 var score_label: Label
 var wave_label: Label
@@ -27,15 +28,24 @@ func _ready() -> void:
 	health_bar.show_percentage = false
 	add_child(health_bar)
 
-	#// Score + wave (under the bar) \\#
+	#// Currency list, vertical, below the health bar \\#
+	var chips_box := VBoxContainer.new()
+	chips_box.position = Vector2(20, 56)
+	chips_box.add_theme_constant_override("separation", 4)
+	add_child(chips_box)
+	red_label = _make_chip_row(chips_box, preload("res://Assets/Redchips.png"))
+	yellow_label = _make_chip_row(chips_box, preload("res://Assets/Yellowchips.png"))
+	blue_label = _make_chip_row(chips_box, preload("res://Assets/Bluechips.png"))
+
+	#// Score + wave, below the chips \\#
 	score_label = Label.new()
-	score_label.position = Vector2(20, 54)
+	score_label.position = Vector2(20, 156)
 	add_child(score_label)
 	wave_label = Label.new()
-	wave_label.position = Vector2(20, 80)
+	wave_label.position = Vector2(20, 182)
 	add_child(wave_label)
 
-	#// Big centered "WAVE N" banner that flashes when a new wave starts \\#
+	#// Big centered "WAVE N" / "WAVE CLEARED" banner \\#
 	wave_banner = Label.new()
 	wave_banner.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	wave_banner.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
@@ -44,21 +54,31 @@ func _ready() -> void:
 	wave_banner.visible = false
 	add_child(wave_banner)
 
-	#// Inventory row \\#
-	inventory_box = HBoxContainer.new()
-	inventory_box.position = Vector2(320, 18)
-	inventory_box.add_theme_constant_override("separation", 16)
-	add_child(inventory_box)
-
-	#// Minimap (top-right): 180x120 with a 20px margin \\#
+	#// Minimap (top-right) \\#
 	var minimap = load("res://Script/minimap.gd").new()
 	minimap.anchor_left = 1.0
 	minimap.anchor_right = 1.0
-	minimap.offset_left = -200.0    # 180 wide, 20px margin from right
+	minimap.offset_left = -200.0
 	minimap.offset_top = 20.0
 	minimap.offset_right = -20.0
-	minimap.offset_bottom = 160.0   # 140 tall
+	minimap.offset_bottom = 160.0
 	add_child(minimap)
+
+func _make_chip_row(parent: VBoxContainer, icon: Texture2D) -> Label:
+	var row := HBoxContainer.new()
+	row.add_theme_constant_override("separation", 8)
+	var tex := TextureRect.new()
+	tex.texture = icon
+	tex.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	tex.custom_minimum_size = Vector2(28, 28)
+	tex.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	row.add_child(tex)
+	var lbl := Label.new()
+	lbl.text = "0"
+	lbl.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	row.add_child(lbl)
+	parent.add_child(row)
+	return lbl
 
 func _process(delta: float) -> void:
 	#// Health bar follows the player smoothly \\#
@@ -70,6 +90,11 @@ func _process(delta: float) -> void:
 	health_bar.max_value = player.MaxHealth
 	display_health = lerp(display_health, player.Health, 12.0 * delta)
 	health_bar.value = display_health
+
+	#// Currency counters \\#
+	red_label.text = "%d" % GameManager.red_chips
+	yellow_label.text = "%d" % GameManager.yellow_chips
+	blue_label.text = "%d" % GameManager.blue_chips
 
 	#// Score + wave \\#
 	score_label.text = "Score: %d" % GameManager.score
@@ -84,31 +109,6 @@ func _process(delta: float) -> void:
 		_banner_timer -= delta
 		if _banner_timer <= 0.0:
 			wave_banner.visible = false
-
-#// Call from pickup code: hud.add_item("Coin", coin_texture) \\#
-func add_item(item_id: String, icon: Texture2D = null) -> void:
-	if inventory.has(item_id):
-		inventory[item_id].count += 1
-		inventory[item_id].label.text = "x%d" % inventory[item_id].count
-		return
-	var slot := VBoxContainer.new()
-	slot.alignment = BoxContainer.ALIGNMENT_CENTER
-	if icon != null:
-		var tex := TextureRect.new()
-		tex.texture = icon
-		tex.custom_minimum_size = Vector2(48, 48)
-		tex.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-		slot.add_child(tex)
-	else:
-		var name_lbl := Label.new()
-		name_lbl.text = item_id
-		slot.add_child(name_lbl)
-	var count_label := Label.new()
-	count_label.text = "x1"
-	count_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	slot.add_child(count_label)
-	inventory_box.add_child(slot)
-	inventory[item_id] = { "count": 1, "label": count_label }
 
 #// Show a big centered message for `duration` seconds (e.g. "WAVE 2", "WAVE CLEARED") \\#
 func flash_banner(text: String, duration: float = 2.0) -> void:
@@ -158,15 +158,18 @@ func show_game_over() -> void:
 func _on_restart_pressed() -> void:
 	GameManager.score = 0
 	GameManager.wave = 0
+	GameManager.red_chips = 0
+	GameManager.yellow_chips = 0
+	GameManager.blue_chips = 0
 	get_tree().paused = false
 	get_tree().reload_current_scene()
 
-#// TEMP: press 1 / 2 / 3 to gather Coin / Gem / Ammo (stacks to x2, x3...). Remove later. \\#
+#// TEMP: press 1 / 2 / 3 to gain a red / yellow / blue chip (test the counters + multipliers). Remove later. \\#
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
 		if event.keycode == KEY_1:
-			add_item("Coin")
+			GameManager.red_chips += 1
 		elif event.keycode == KEY_2:
-			add_item("Gem")
+			GameManager.yellow_chips += 1
 		elif event.keycode == KEY_3:
-			add_item("Ammo")
+			GameManager.blue_chips += 1
