@@ -17,7 +17,7 @@ shader_parameter/y_offset = 0.035
 [node name="Main" type="Node2D" unique_id=1318911814]
 
 [node name="Player" parent="." unique_id=1754233404 instance=ExtResource("1_i04dx")]
-position = Vector2(204, 218)
+position = Vector2(450, 350)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=2069835693]
 
