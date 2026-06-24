@@ -5,8 +5,13 @@
 [ext_resource type="Shader" uid="uid://dtjn5iapbvo6q" path="res://Scenes/root.gdshader" id="3_c3mwy"]
 [ext_resource type="Script" uid="uid://cegd5h2j4ee0l" path="res://Script/spawner.gd" id="3_spawn"]
 [ext_resource type="Texture2D" uid="uid://cjwpiyn0v1ih7" path="res://Assets/Sprite-0001-Sheet.png" id="4_4g5cr"]
+<<<<<<< HEAD
 [ext_resource type="Script" uid="uid://bimft6ehwwr8b" path="res://Script/hud.gd" id="4_hud"]
 [ext_resource type="Script" uid="uid://d1a781nywhf5d" path="res://Script/obstacle_spawner.gd" id="5_obst"]
+=======
+[ext_resource type="Script" uid="uid://d0kwejefqbmva" path="res://Script/hud.gd" id="4_hud"]
+[ext_resource type="Script" uid="uid://bphb02unhhg1h" path="res://Script/obstacle_spawner.gd" id="5_obst"]
+>>>>>>> f7014664cd6c72d6582bd639d27d733e8cf7cfa7
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4ivgj"]
 shader = ExtResource("3_c3mwy")
@@ -17,7 +22,7 @@ shader_parameter/y_offset = 0.035
 [node name="Main" type="Node2D" unique_id=1318911814]
 
 [node name="Player" parent="." unique_id=1754233404 instance=ExtResource("1_i04dx")]
-position = Vector2(204, 218)
+position = Vector2(450, 350)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=2069835693]
 
@@ -45,10 +50,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -246.5
-offset_top = -138.0
-offset_right = 246.5
-offset_bottom = 138.0
+offset_left = 67.0
+offset_top = 31.0
+offset_right = 560.0
+offset_bottom = 307.0
 grow_horizontal = 2
 grow_vertical = 2
 
