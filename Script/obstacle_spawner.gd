@@ -8,11 +8,9 @@ extends Node2D
 @export var min_gap: float = 360.0                    # min distance between obstacles -> wide walkable gaps
 @export var clear_radius: float = 320.0               # keep this circle around the center clear (spawn-safe)
 
-#// Obstacle art (swap in the Inspector if needed) \\#
-@export var slot_texture: Texture2D = preload("res://Assets/SlotMachine.png")
-@export var table_texture: Texture2D = preload("res://Assets/pokerTable.png")
-@export var art_scale: float = 4.0                    # pixel art is tiny — scale it up
-@export var collision_scale: float = 0.6              # collision box vs the sprite (smaller = easier to brush past)
+#// Obstacle scenes — open these .tscn files to edit their art or drag their hitboxes \\#
+@export var slot_scene: PackedScene = preload("res://Obstacles/SlotMachine.tscn")
+@export var table_scene: PackedScene = preload("res://Obstacles/PokerTable.tscn")
 
 var _placed: Array[Vector2] = []
 
@@ -38,25 +36,10 @@ func _ready() -> void:
 		_make_obstacle(pos)
 
 func _make_obstacle(local_pos: Vector2) -> void:
-	# randomly a slot machine or a poker table
-	var tex: Texture2D = slot_texture if randf() < 0.5 else table_texture
-
-	var body := StaticBody2D.new()
-	body.position = local_pos
-	body.z_index = -1   # draw behind the player and enemies, not on top of them
-
-	# the sprite (centered by default)
-	var sprite := Sprite2D.new()
-	sprite.texture = tex
-	sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST   # crisp pixel art, no blur
-	sprite.scale = Vector2(art_scale, art_scale)
-	body.add_child(sprite)
-
-	# collision smaller than the sprite so you can brush past furniture
-	var col := CollisionShape2D.new()
-	var shape := RectangleShape2D.new()
-	shape.size = Vector2(tex.get_size()) * art_scale * collision_scale
-	col.shape = shape
-	body.add_child(col)
-
-	add_child(body)
+	# randomly a slot machine or a poker table — each is its own editable scene
+	var scene: PackedScene = slot_scene if randf() < 0.5 else table_scene
+	if scene == null:
+		return
+	var obstacle := scene.instantiate()
+	obstacle.position = local_pos
+	add_child(obstacle)
