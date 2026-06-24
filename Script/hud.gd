@@ -42,10 +42,10 @@ func _ready() -> void:
 	var minimap = load("res://Script/minimap.gd").new()
 	minimap.anchor_left = 1.0
 	minimap.anchor_right = 1.0
-	minimap.offset_left = -200.0
+	minimap.offset_left = -920.0    # 900 wide (5x bigger), 20px margin from right
 	minimap.offset_top = 20.0
 	minimap.offset_right = -20.0
-	minimap.offset_bottom = 140.0
+	minimap.offset_bottom = 620.0   # 600 tall
 	add_child(minimap)
 
 func _process(delta: float) -> void:
