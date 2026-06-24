@@ -11,6 +11,9 @@ var inventory: Dictionary = {}   # item_id -> { "count": int, "label": Label }
 
 var score_label: Label
 var wave_label: Label
+var wave_banner: Label
+var _last_wave: int = 0
+var _banner_timer: float = 0.0
 var _game_over: bool = false
 
 func _ready() -> void:
@@ -31,6 +34,15 @@ func _ready() -> void:
 	wave_label = Label.new()
 	wave_label.position = Vector2(20, 80)
 	add_child(wave_label)
+
+	#// Big centered "WAVE N" banner that flashes when a new wave starts \\#
+	wave_banner = Label.new()
+	wave_banner.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	wave_banner.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	wave_banner.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	wave_banner.add_theme_font_size_override("font_size", 64)
+	wave_banner.visible = false
+	add_child(wave_banner)
 
 	#// Inventory row \\#
 	inventory_box = HBoxContainer.new()
@@ -62,6 +74,18 @@ func _process(delta: float) -> void:
 	#// Score + wave \\#
 	score_label.text = "Score: %d" % GameManager.score
 	wave_label.text = "Wave: %d" % GameManager.wave
+
+	#// Flash the banner whenever the wave number changes \\#
+	if GameManager.wave != _last_wave:
+		_last_wave = GameManager.wave
+		if GameManager.wave > 0:
+			wave_banner.text = "WAVE %d" % GameManager.wave
+			wave_banner.visible = true
+			_banner_timer = 2.0
+	if _banner_timer > 0.0:
+		_banner_timer -= delta
+		if _banner_timer <= 0.0:
+			wave_banner.visible = false
 
 #// Call from pickup code: hud.add_item("Coin", coin_texture) \\#
 func add_item(item_id: String, icon: Texture2D = null) -> void:

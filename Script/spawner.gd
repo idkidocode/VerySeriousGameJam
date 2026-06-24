@@ -50,5 +50,11 @@ func _begin_wave() -> void:
 func _spawn_enemy() -> void:
 	var enemy := enemy_scene.instantiate()
 	get_parent().add_child(enemy)
+	# spawn in a ring around the PLAYER (so they come from all sides as you roam),
+	# falling back to this node's position if the player isn't found
+	var center := global_position
+	var player := get_tree().get_first_node_in_group("Player")
+	if player and is_instance_valid(player):
+		center = player.global_position
 	var angle := randf() * TAU
-	enemy.global_position = global_position + Vector2(cos(angle), sin(angle)) * spawn_radius
+	enemy.global_position = center + Vector2(cos(angle), sin(angle)) * spawn_radius
