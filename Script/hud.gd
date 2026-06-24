@@ -38,6 +38,16 @@ func _ready() -> void:
 	inventory_box.add_theme_constant_override("separation", 16)
 	add_child(inventory_box)
 
+	#// Minimap (top-right): 180x120 with a 20px margin \\#
+	var minimap = load("res://Script/minimap.gd").new()
+	minimap.anchor_left = 1.0
+	minimap.anchor_right = 1.0
+	minimap.offset_left = -200.0
+	minimap.offset_top = 20.0
+	minimap.offset_right = -20.0
+	minimap.offset_bottom = 140.0
+	add_child(minimap)
+
 func _process(delta: float) -> void:
 	#// Health bar follows the player smoothly \\#
 	if player == null or not is_instance_valid(player):
