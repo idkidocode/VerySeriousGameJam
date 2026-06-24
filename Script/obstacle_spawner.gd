@@ -8,6 +8,11 @@ extends Node2D
 @export var min_gap: float = 360.0                    # min distance between obstacles -> wide walkable gaps
 @export var clear_radius: float = 320.0               # keep this circle around the center clear (spawn-safe)
 
+#// Obstacle art (swap in the Inspector if needed) \\#
+@export var slot_texture: Texture2D = preload("res://Assets/SlotMachine.png")
+@export var table_texture: Texture2D = preload("res://Assets/pokerTable.png")
+@export var art_scale: float = 4.0                    # pixel art is tiny — scale it up
+
 var _placed: Array[Vector2] = []
 
 func _ready() -> void:
@@ -32,28 +37,24 @@ func _ready() -> void:
 		_make_obstacle(pos)
 
 func _make_obstacle(local_pos: Vector2) -> void:
-	var is_table := randf() < 0.45
-	var box_size: Vector2 = Vector2(95, 95) if is_table else Vector2(48, 48)
-	var color: Color = Color(0.45, 0.30, 0.18) if is_table else Color(0.38, 0.38, 0.44)
+	# randomly a slot machine or a poker table
+	var tex: Texture2D = slot_texture if randf() < 0.5 else table_texture
 
 	var body := StaticBody2D.new()
 	body.position = local_pos
 
-	# collision (this is what blocks movement + the raycast)
+	# the sprite (centered by default)
+	var sprite := Sprite2D.new()
+	sprite.texture = tex
+	sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST   # crisp pixel art, no blur
+	sprite.scale = Vector2(art_scale, art_scale)
+	body.add_child(sprite)
+
+	# collision sized to match the scaled art (centered, like the sprite)
 	var col := CollisionShape2D.new()
 	var shape := RectangleShape2D.new()
-	shape.size = box_size
+	shape.size = Vector2(tex.get_size()) * art_scale
 	col.shape = shape
 	body.add_child(col)
-
-	# placeholder visual (swap for chair/table art later)
-	var hx: float = box_size.x * 0.5
-	var hy: float = box_size.y * 0.5
-	var vis := Polygon2D.new()
-	vis.polygon = PackedVector2Array([
-		Vector2(-hx, -hy), Vector2(hx, -hy), Vector2(hx, hy), Vector2(-hx, hy)
-	])
-	vis.color = color
-	body.add_child(vis)
 
 	add_child(body)
