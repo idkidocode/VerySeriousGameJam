@@ -14,6 +14,7 @@ var Hit_tween: Tween
 @export var MoveSpeed: float = 120.0
 @export var ContactDamage: float = 10.0
 var player: Node2D
+var _dead: bool = false
 
 func _ready() -> void:
 	#// Start up things \\#
@@ -46,7 +47,9 @@ func TakeDamage(amount: float) -> void:
 		health_bar.visible = true
 	Health -= amount
 	HitEffect(0.2)
-	if Health <= 0:
+	if Health <= 0 and not _dead:
+		_dead = true
+		GameManager.score += 1
 		queue_free.call_deferred()
 
 	

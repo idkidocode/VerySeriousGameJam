@@ -96,5 +96,9 @@ func TakeDamage(amount: float) -> void:
 	invincible = false
 
 func Die() -> void:
-	#// Simple game over: restart the scene. Swap for a game-over screen later. \\#
-	get_tree().reload_current_scene()
+	#// Show the game-over screen (HUD); fall back to a plain reload if the HUD isn't found. \\#
+	var hud = get_tree().get_first_node_in_group("HUD")
+	if hud and hud.has_method("show_game_over"):
+		hud.show_game_over()
+	else:
+		get_tree().reload_current_scene()
