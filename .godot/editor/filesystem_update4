@@ -1,0 +1,5 @@
+res://EnemyScript.gd
+res://Script/gun.gd
+res://Script/player_movement.gd
+res://Scenes/root.tscn
+res://Scenes/root.gdshader
