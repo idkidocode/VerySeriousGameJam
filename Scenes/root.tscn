@@ -7,7 +7,6 @@
 [ext_resource type="Texture2D" uid="uid://cjwpiyn0v1ih7" path="res://Assets/Sprite-0001-Sheet.png" id="4_4g5cr"]
 [ext_resource type="Script" uid="uid://d0kwejefqbmva" path="res://Script/hud.gd" id="4_hud"]
 [ext_resource type="Script" uid="uid://bphb02unhhg1h" path="res://Script/obstacle_spawner.gd" id="5_obst"]
-[ext_resource type="Script" path="res://Script/arena_bounds.gd" id="6_arena"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4ivgj"]
 shader = ExtResource("3_c3mwy")
@@ -37,10 +36,6 @@ script = ExtResource("4_hud")
 [node name="ObstacleSpawner" type="Node2D" parent="." unique_id=500100300]
 position = Vector2(450, 350)
 script = ExtResource("5_obst")
-
-[node name="ArenaBounds" type="Node2D" parent="." unique_id=500100400]
-position = Vector2(450, 350)
-script = ExtResource("6_arena")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=403419489]
 

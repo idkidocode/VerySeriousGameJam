@@ -4,9 +4,9 @@ extends Node2D
 # AND the gun's raycast (cover) — no per-obstacle code needed.
 
 @export var obstacle_count: int = 10
-@export var area_size: Vector2 = Vector2(1100, 750)   # spread area, centered on this node
-@export var min_gap: float = 150.0                    # min distance between obstacles -> walkable gaps
-@export var clear_radius: float = 220.0               # keep this circle around the center clear (spawn-safe)
+@export var area_size: Vector2 = Vector2(2200, 1500)  # spread area, centered on this node (bigger = sparser)
+@export var min_gap: float = 360.0                    # min distance between obstacles -> wide walkable gaps
+@export var clear_radius: float = 320.0               # keep this circle around the center clear (spawn-safe)
 
 var _placed: Array[Vector2] = []
 
