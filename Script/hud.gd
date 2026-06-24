@@ -79,9 +79,7 @@ func _process(delta: float) -> void:
 	if GameManager.wave != _last_wave:
 		_last_wave = GameManager.wave
 		if GameManager.wave > 0:
-			wave_banner.text = "WAVE %d" % GameManager.wave
-			wave_banner.visible = true
-			_banner_timer = 2.0
+			flash_banner("WAVE %d" % GameManager.wave)
 	if _banner_timer > 0.0:
 		_banner_timer -= delta
 		if _banner_timer <= 0.0:
@@ -111,6 +109,12 @@ func add_item(item_id: String, icon: Texture2D = null) -> void:
 	slot.add_child(count_label)
 	inventory_box.add_child(slot)
 	inventory[item_id] = { "count": 1, "label": count_label }
+
+#// Show a big centered message for `duration` seconds (e.g. "WAVE 2", "WAVE CLEARED") \\#
+func flash_banner(text: String, duration: float = 2.0) -> void:
+	wave_banner.text = text
+	wave_banner.visible = true
+	_banner_timer = duration
 
 #// Shown when the player dies. Pauses the game and offers a restart. \\#
 func show_game_over() -> void:
